@@ -12,3 +12,6 @@
  --> Network ကရတဲ့ dataတွေက Observable ုံစံဖြစ်ပြီး ,Room ထဲက dataတွေကို  LiveData နဲ့  setup လုပ်ထားပါတယ်
  
  
+
+
+![](myphoto.jpg)
