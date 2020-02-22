@@ -1,11 +1,9 @@
 package com.aungpyaesone.padc_x_rx_travel_app_aps.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aungpyaesone.padc_x_rx_travel_app_aps.R
 import com.aungpyaesone.padc_x_rx_travel_app_aps.adapters.MainAdapter
@@ -13,8 +11,6 @@ import com.aungpyaesone.padc_x_rx_travel_app_aps.data.mdoel.CountryModel
 import com.aungpyaesone.padc_x_rx_travel_app_aps.data.mdoel.CountryModelImpl
 import com.aungpyaesone.padc_x_rx_travel_app_aps.data.vos.DataVO
 import com.aungpyaesone.padc_x_rx_travel_app_aps.delegate.CountryItemDelegate
-import com.aungpyaesone.padc_x_rx_travel_app_aps.persistence.database.TourDB
-import com.aungpyaesone.padc_x_travel_app_aps.adapter.PopularTourListAdapter
 import com.aungpyaesone.padc_x_travel_app_aps.utils.EN_CONNECTION_ERROR
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -78,8 +74,8 @@ class HomeFragment : BaseFragment(), CountryItemDelegate {
     private fun requestData() {
         swipeRefreshLayout.isRefreshing = true
         mCountryModel.getCommonApi(onError = {
-            swipeRefreshLayout.isRefreshing = false
             showSnackbar(it)
+            swipeRefreshLayout.isRefreshing = false
         }).observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 swipeRefreshLayout.isRefreshing = false

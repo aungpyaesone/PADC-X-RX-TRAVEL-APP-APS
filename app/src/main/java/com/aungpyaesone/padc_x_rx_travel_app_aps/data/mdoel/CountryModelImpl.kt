@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import com.aungpyaesone.padc_x_rx_travel_app_aps.data.vos.DataVO
 import com.aungpyaesone.padc_x_travel_app_aps.data.vos.CountryVO
+import com.aungpyaesone.padc_x_travel_app_aps.utils.EN_CONNECTION_ERROR
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
@@ -13,7 +14,7 @@ import io.reactivex.schedulers.Schedulers
 
 object CountryModelImpl: BaseModel(), CountryModel {
 
-
+/*
     override fun getTwoApi(onError:(message:String)->Unit): Observable<List<CountryVO>>{
         return Observable.zip(
             mNetworkApi.getAllCourntries().map { it.data.toList() }.subscribeOn(Schedulers.io()),
@@ -35,7 +36,7 @@ object CountryModelImpl: BaseModel(), CountryModel {
             }
             dataList
         }
-    }
+    }*/
 
     @SuppressLint("CheckResult")
     override fun getCommonApi(onError: (message: String) -> Unit): Observable<DataVO> {
@@ -52,6 +53,7 @@ object CountryModelImpl: BaseModel(), CountryModel {
                 .subscribe ({
                     mTheDB.TourDao().insertAllData(it) },{
                     Log.e("error",it.localizedMessage)
+                    onError(it.localizedMessage ?: EN_CONNECTION_ERROR)
                 })
             observableTwo.subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe ({
@@ -59,16 +61,8 @@ object CountryModelImpl: BaseModel(), CountryModel {
                 },{
                     Log.e("error",it.localizedMessage.toString())
                 })
-       /* zipData.subscribeOn(Schedulers.io())
-            .filter { it.countryList.size==5 && it.popourTourList.size>=5 }
 
-            .subscribe( {
-
-               // mTheDB.TourDao().insertAllData(it.popourTourList)
-            },{
-                Log.e("error",it.localizedMessage)
-            })*/
-        return zipData
+        return zipData.subscribeOn(Schedulers.io())
     }
 
     private fun createDataVOModel():BiFunction<List<CountryVO>,List<CountryVO>,DataVO> {

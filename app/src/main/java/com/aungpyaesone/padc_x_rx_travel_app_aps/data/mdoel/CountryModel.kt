@@ -10,7 +10,7 @@ interface CountryModel {
    /* fun getAllCountries(): Observable<List<CountryVO>>
     fun getAllTours() : Observable<List<CountryVO>>
 */
-    fun getTwoApi(onError:(message:String)->Unit): Observable<List<CountryVO>>
+  //  fun getTwoApi(onError:(message:String)->Unit): Observable<List<CountryVO>>
 
 
     fun getCommonApi(onError: (message: String) -> Unit) : Observable<DataVO>

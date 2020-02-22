@@ -2,7 +2,7 @@ package com.aungpyaesone.padc_x_travel_app_aps.utils
 
 const val CODE_RESPONSE = 200
 
-const val BASE_URL = "https://9c985d89-df03-4ce1-8de3-7e104dd036d3.mock.pstmn.io/"
+const val BASE_URL = "https://e1314c36-5305-4773-90b6-d3032291d1bf.mock.pstmn.io/"
 const val GET_ALL_TOUR = "/getAllTours"
 const val GET_ALL_COUNTRY = "/getAllCountries"
 
