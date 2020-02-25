@@ -5,21 +5,23 @@ import android.view.View
 import com.aungpyaesone.padc_x_rx_travel_app_aps.delegate.CountryItemDelegate
 import com.aungpyaesone.padc_x_rx_travel_app_aps.view.viewholders.BaseViewHolder
 import com.aungpyaesone.padc_x_travel_app_aps.data.vos.CountryVO
+import com.aungpyaesone.padc_x_travel_app_aps.data.vos.PopularTourVO
+import com.aungpyaesone.padc_x_travel_app_aps.utils.VALUE_TWO
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.vertical_item_view.view.*
 
-class PopularTourViewHolder(itemView: View,delegate: CountryItemDelegate) : BaseViewHolder<CountryVO>(itemView) {
+class PopularTourViewHolder(itemView: View,delegate: CountryItemDelegate) : BaseViewHolder<PopularTourVO>(itemView) {
 
     init {
         itemView.setOnClickListener {
             mData?.let {
-                delegate.onTouchCountryItem(it.name)
+                delegate.onTouchCountryItem(it.name, VALUE_TWO)
             }
 
         }
     }
 
-    override fun bindData(data: CountryVO) {
+    override fun bindData(data: PopularTourVO) {
         mData = data
         Glide.with(itemView.context)
             .load(data.photos[1])

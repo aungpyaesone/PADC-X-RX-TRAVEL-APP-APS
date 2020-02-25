@@ -10,8 +10,7 @@ import retrofit2.http.*
 
 interface NewtorkApi{
     @GET(GET_ALL_COUNTRY)
-    fun getAllCourntries()
-            : Observable<GetAllCountryResponse>
+    fun getAllCourntries(): Observable<GetAllCountryResponse>
 
     @GET(GET_ALL_TOUR)
     fun getAllTours(): Observable<GetAllTourResponse>

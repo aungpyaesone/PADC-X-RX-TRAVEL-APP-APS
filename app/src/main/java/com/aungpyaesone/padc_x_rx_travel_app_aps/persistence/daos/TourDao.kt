@@ -17,5 +17,9 @@ interface TourDao{
     @Query("select * from country where name= :name")
     fun getTourById(name: String) : LiveData<CountryVO>
 
+    @Query("select * from country")
+    fun getAllCountryList():LiveData<List<CountryVO>>
+
+
 
 }

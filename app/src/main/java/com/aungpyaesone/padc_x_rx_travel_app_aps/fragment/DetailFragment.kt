@@ -6,30 +6,39 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aungpyaesone.padc_x_rx_travel_app_aps.R
 import com.aungpyaesone.padc_x_rx_travel_app_aps.data.mdoel.CountryModel
 import com.aungpyaesone.padc_x_rx_travel_app_aps.data.mdoel.CountryModelImpl
+import com.aungpyaesone.padc_x_rx_travel_app_aps.mvp.presenter.DetailPresenter
+import com.aungpyaesone.padc_x_rx_travel_app_aps.mvp.presenter.DetailPresenterImpl
+import com.aungpyaesone.padc_x_rx_travel_app_aps.mvp.views.DetailsView
 import com.aungpyaesone.padc_x_travel_app_aps.adapter.PhotoAdapter
 import com.aungpyaesone.padc_x_travel_app_aps.adapter.ScoreandReviewAdapter
+import com.aungpyaesone.padc_x_travel_app_aps.data.vos.CountryVO
+import com.aungpyaesone.padc_x_travel_app_aps.data.vos.PopularTourVO
 import com.bumptech.glide.Glide
 
 import kotlinx.android.synthetic.main.detail_layout.*
 import kotlinx.android.synthetic.main.fragment_detail.*
 
 private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"
 
-class DetailFragment : BaseFragment() {
-
+class DetailFragment : BaseFragment(),DetailsView {
     private var tourName: String = " "
+    private var mValue: Int = 0
     private lateinit var mScoreandReviewAdapter: ScoreandReviewAdapter
     private lateinit var mPhotoAdapter: PhotoAdapter
-    val mCountryModel: CountryModel = CountryModelImpl
+    private lateinit var mDetailPresenter: DetailPresenter
+    //val mCountryModel: CountryModel = CountryModelImpl
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             tourName = it.getString(ARG_PARAM1).toString()
+            mValue = it.getInt(ARG_PARAM2)
         }
     }
 
@@ -44,28 +53,15 @@ class DetailFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initPresneter()
         setUpRecycler()
-        requestData()
         settingData()
-
+        mDetailPresenter.onDetailUiReadyState(tourName,mValue,this)
     }
 
-    private fun requestData() {
-        mCountryModel.findTourById(tourName).observe(this, Observer { countryVO ->
-            activity?.let {
-                Glide.with(it)
-                    .load(countryVO.photos[1])
-                    .centerCrop()
-                    .into(imgProfile)
-            }
-            title.text = countryVO.name
-            tvLocation.text = countryVO.location
-            tvRating.text = countryVO.average_rating.toString()
-            ratingBar.rating = countryVO.average_rating.toFloat()
-            mScoreandReviewAdapter.setData(countryVO.scores_and_reviews)
-            mPhotoAdapter.setData(countryVO.photos)
-            tvDescription.text = countryVO.description
-        })
+    private fun initPresneter(){
+        mDetailPresenter = ViewModelProviders.of(this).get(DetailPresenterImpl::class.java)
+        mDetailPresenter.initPresenter(this)
     }
 
     private fun setUpRecycler() {
@@ -89,11 +85,48 @@ class DetailFragment : BaseFragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(name: String) =
+        fun newInstance(name: String,value:Int) =
             DetailFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, name)
+                    putInt(ARG_PARAM2,value)
                 }
             }
+    }
+
+    override fun displayTourData(tourdata: PopularTourVO) {
+        activity?.let {
+            Glide.with(it)
+                .load(tourdata.photos[1])
+                .centerCrop()
+                .into(imgProfile)
+        }
+        title.text = tourdata.name
+        tvLocation.text = tourdata.location
+        tvRating.text = tourdata.average_rating.toString()
+        ratingBar.rating = tourdata.average_rating.toFloat()
+        mScoreandReviewAdapter.setData(tourdata.scores_and_reviews)
+        mPhotoAdapter.setData(tourdata.photos)
+        tvDescription.text = tourdata.description
+    }
+
+    override fun displayCountryData(countrydata: CountryVO) {
+        activity?.let {
+            Glide.with(it)
+                .load(countrydata.photos[1])
+                .centerCrop()
+                .into(imgProfile)
+        }
+        title.text = countrydata.name
+        tvLocation.text = countrydata.location
+        tvRating.text = countrydata.average_rating.toString()
+        ratingBar.rating = countrydata.average_rating.toFloat()
+        mScoreandReviewAdapter.setData(countrydata.scores_and_reviews)
+        mPhotoAdapter.setData(countrydata.photos)
+        tvDescription.text = countrydata.description
+    }
+
+    override fun showErrorMessage(message: String) {
+        showSnackbar(message)
     }
 }

@@ -5,6 +5,7 @@ import android.view.View
 import com.aungpyaesone.padc_x_rx_travel_app_aps.delegate.CountryItemDelegate
 import com.aungpyaesone.padc_x_rx_travel_app_aps.view.viewholders.BaseViewHolder
 import com.aungpyaesone.padc_x_travel_app_aps.data.vos.CountryVO
+import com.aungpyaesone.padc_x_travel_app_aps.utils.VALUE_ONE
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.horizontal_item_view.view.*
 
@@ -13,7 +14,7 @@ class CountryViewHolder(itemView: View,delegate: CountryItemDelegate) : BaseView
     init {
         itemView.setOnClickListener {
             mData?.let {
-                delegate.onTouchCountryItem(it.name)
+                delegate.onTouchCountryItem(it.name, VALUE_ONE)
             }
 
         }

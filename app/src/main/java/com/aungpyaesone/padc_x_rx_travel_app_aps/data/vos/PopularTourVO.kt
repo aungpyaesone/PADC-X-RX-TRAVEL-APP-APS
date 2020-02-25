@@ -7,10 +7,9 @@ import com.aungpyaesone.padc_x_rx_travel_app_aps.persistence.PhotoTypeConverter
 import com.aungpyaesone.padc_x_rx_travel_app_aps.persistence.ScoreAndReviewTypeConverter
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "country")
+@Entity(tableName = "popular_tour")
 @TypeConverters(ScoreAndReviewTypeConverter::class, PhotoTypeConverter::class)
-data class CountryVO(
-
+data class PopularTourVO(
     @PrimaryKey
     @SerializedName("name")var name:String ="",
     @SerializedName("description")var description:String ="",
