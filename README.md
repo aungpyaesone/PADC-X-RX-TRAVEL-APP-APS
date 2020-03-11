@@ -11,7 +11,7 @@
  
  --> Network ကရတဲ့ dataတွေက Observable ုံစံဖြစ်ပြီး ,Room ထဲက dataတွေကို  LiveData နဲ့  setup လုပ်ထားပါတယ်
  
- 
+ --> MVP နဲ့ modified ထပ်လုပ်ထားပါတယ်
 
 
 ![](myphoto.jpg)
