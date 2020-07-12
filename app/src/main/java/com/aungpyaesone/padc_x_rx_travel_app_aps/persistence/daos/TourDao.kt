@@ -14,6 +14,9 @@ interface TourDao{
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllData(infos:List<CountryVO>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertCountry(country:CountryVO)
+
     @Query("select * from country where name= :name")
     fun getTourById(name: String) : LiveData<CountryVO>
 

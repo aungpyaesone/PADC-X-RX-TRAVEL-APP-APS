@@ -13,8 +13,10 @@ import io.reactivex.rxkotlin.addTo
 
 class HomePresenterImpl: HomePresenter, AbstractBasePresenter<HomeView>() {
 
-    private val mCountryModel:CountryModel = CountryModelImpl
+    var mCountryModel:CountryModel = CountryModelImpl
     private lateinit var dataVO: DataVO
+
+  //  var mCountryModel : CountryModel = CountryModelImpl
     private val compositeDisposable = CompositeDisposable()
 
     override fun onSwipeRefresh(lifecycleOwner: LifecycleOwner) {
